@@ -1,5 +1,4 @@
 import {Fragment} from 'react';
-
 import './App.scss';
 
 function App() {
