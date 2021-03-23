@@ -149,7 +149,7 @@ class Search extends Component{
                                 onChange = {this.handleChange}
                                 onKeyPress = {(e) => {
                                     if(e.key === 'Enter'){
-                                        this.handleSubmit();
+                                        this.handleSubmit(e);
                                     }
                                 }}
                                 id="searchBar"
