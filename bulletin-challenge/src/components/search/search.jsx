@@ -22,7 +22,7 @@ class Search extends Component{
                 .then(res => {
                     console.log(res);
                     this.setState({
-                        today: res,
+                        today: res.data,
                         submitted: true
                     })
                 })
@@ -58,8 +58,10 @@ class Search extends Component{
 
         render(){
             const isSubmitted = this.state.submitted
-            const today = [this.state.today]
-            console.log(today)
+            //const {today, forecast} = this.state
+            console.log(this.state);
+            const today = [this.state.today];
+            console.log(today);
             return(
                 <Fragment>
                     <section className="search">
@@ -91,13 +93,10 @@ class Search extends Component{
                     <section className="results">
                         {
                             (isSubmitted) ? (
-                                today.map((cur, index) => (
-                                    <CurrentForecast 
-                                        key={index}
-                                        date={cur}
-                                    />
-                                ))
-                                
+                                <CurrentForecast 
+                                    date={today}
+                                /> 
+                                  
                             ) : null
                         }
                        
