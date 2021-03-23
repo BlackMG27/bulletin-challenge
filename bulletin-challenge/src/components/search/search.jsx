@@ -6,8 +6,8 @@ import ForecastGrab from '../../utils/ForecastGrab';
 
 
 class Search extends Component{
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
             zip: '',
             today: [],
@@ -15,13 +15,22 @@ class Search extends Component{
             submitted: false
         }
     }
-    
-    
+        
+        //pass once the 
         fetchCurrentWeather = zip => {
-            console.log(zip)
              CurrentGrab.getCurrentWeather(zip)
-                .then(res => this.setState({today: res.data}))
+                .then(res => {
+                    console.log(res);
+                    this.setState({
+                        today: res,
+                        submitted: true
+                    })
+                })
                 .catch(err => console.log(err))
+        }
+
+        componentDidMount(){
+            this.fetchCurrentWeather();
         }
 
     
@@ -35,10 +44,10 @@ class Search extends Component{
 
    handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state.zip);
-        this.setState({submitted: true})
+        this.setState({
+            ...this.state
+        })
         this.fetchCurrentWeather(this.state.zip)
-        this.state.zip = ''
     }
 
     // handleKeyPress = e => {
@@ -49,7 +58,8 @@ class Search extends Component{
 
         render(){
             const isSubmitted = this.state.submitted
-            const {today = [], forecast = []} = this.props
+            const today = [this.state.today]
+            console.log(today)
             return(
                 <Fragment>
                     <section className="search">
@@ -81,7 +91,13 @@ class Search extends Component{
                     <section className="results">
                         {
                             (isSubmitted) ? (
-                                <CurrentForecast data={today}/>
+                                today.map((cur, index) => (
+                                    <CurrentForecast 
+                                        key={index}
+                                        date={cur}
+                                    />
+                                ))
+                                
                             ) : null
                         }
                        
