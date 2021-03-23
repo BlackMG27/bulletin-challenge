@@ -21,7 +21,7 @@
          <h1 className="results__title">{curr.date[0].name}, {curr.date[0].country}</h1>
          <h2 className="results__date">{date}</h2>
         <aside className="results__current">
-            <h3 className="results__current-temp">{curr.date[0].cTemp}</h3>
+            <h3 className="results__current-temp">{curr.date[0].temp}</h3>
             <h4 className="results__current-feels">{curr.date[0].feels_like}</h4>
             <div className="results__current-weather">
                 <img src={curr.date[0].weather[0].icon} alt={curr.date[0].weather[0].description} className="results__current-weather-icon"/>

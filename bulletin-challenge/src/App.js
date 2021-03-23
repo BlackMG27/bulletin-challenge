@@ -5,7 +5,7 @@ import './App.scss';
 function App() {
   return (
     <Fragment>
-      <h1>This is working</h1>
+      <h1>Weather App</h1>
       <Search/>
     </Fragment>
   );

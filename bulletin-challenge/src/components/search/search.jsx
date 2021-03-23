@@ -1,9 +1,8 @@
 import React, {Fragment, Component} from 'react';
-//import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types'
 import CurrentGrab from '../../utils/CurrentGrab';
-import CurrentForecast from '../current/current';
 import ForecastGrab from '../../utils/ForecastGrab';
-
+import ForecastWeek from './../forecast/forecast';
 
 class Search extends Component{
     constructor(){
@@ -16,11 +15,10 @@ class Search extends Component{
         }
     }
         
-        //pass once the 
+        //pass once the form is submitted
         fetchCurrentWeather = zip => {
              CurrentGrab.getCurrentWeather(zip)
                 .then(res => {
-                    console.log(res);
                     this.setState({
                         today: res.data,
                         submitted: true
@@ -29,14 +27,24 @@ class Search extends Component{
                 .catch(err => console.log(err))
         }
 
+        fetchForecast = zip => {
+            ForecastGrab.getForecast(zip)
+            .then(res => {
+                this.setState({
+                    forecast: res.data.list,
+                    submitted: true
+                })
+            }).catch(err => console.log(err))
+        }
+
         componentDidMount(){
             this.fetchCurrentWeather();
+            this.fetchForecast();
         }
 
     
     handleChange = e => {
         const {value, name} = e.target;
-        console.log(name + value);
         this.setState({
             [name]: value
         })
@@ -48,6 +56,7 @@ class Search extends Component{
             ...this.state
         })
         this.fetchCurrentWeather(this.state.zip)
+        this.fetchForecast(this.state.zip);
     }
 
     // handleKeyPress = e => {
@@ -58,10 +67,70 @@ class Search extends Component{
 
         render(){
             const isSubmitted = this.state.submitted
-            //const {today, forecast} = this.state
-            console.log(this.state);
-            const today = [this.state.today];
-            console.log(today);
+            const fConverter = temp => {
+                 temp = (1.8 * (temp - 273)) + 32
+                 return temp.toFixed(1)
+            }
+            //variables for current
+            const today = this.state.today;
+            const dateOptions = {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                timezone: 'UTC'
+            }
+            const date = new Intl.DateTimeFormat('en-US', dateOptions).format(new Date())
+
+            //variables for forecast 
+            const forecast = this.state.forecast;
+            let thisForecast, newForecast, max, min, thisHasRain, hasRain;
+            const newForecastWeek = [];
+
+            //group of the objects by date
+            thisForecast = forecast.reduce((a, c) => {
+                //if the date doesn't exist in the array
+                if (!a[c.dt_txt.substring(0, 10)]) {
+                  //sets each individual date as an array
+                  a[c.dt_txt.substring(0, 10)] = [c];
+                  //also checks to see if the that object is in the array
+                } else {
+                  //pushes that object into that specific date array
+                  a[c.dt_txt.substring(0, 10)].push(c);
+                }
+                return a;
+                //puts everything into an array
+              }, {});
+              //change the object into an array
+              newForecast = Object.values(thisForecast)
+
+              for (let t = 0; t < newForecast.length; t++) {
+                //get the max
+                max = newForecast[t].reduce((prev, cur) => {
+                  return prev.main.temp_max > cur.main.temp_max ? prev : cur;
+                });
+                //get the min
+                min = newForecast[t].reduce((prev, cur) => {
+                  return prev.main.temp_min < cur.main.temp_min ? prev : cur;
+                });
+   
+                //setup the rain checker function
+                thisHasRain = (r) => {
+                  return r.hasOwnProperty("rain");
+                };
+   
+                //check if there's rain
+                hasRain = newForecast[t].some(thisHasRain);
+   
+                //push them into newForecastWeek
+                newForecastWeek.push({
+                  high: max.main.temp_max,
+                  low: min.main.temp_min,
+                  rain: hasRain,
+                  index: t
+                });
+              }
+            
             return(
                 <Fragment>
                     <section className="search">
@@ -69,10 +138,11 @@ class Search extends Component{
                             <label 
                                 htmlFor="searchBar" 
                                 className="search__form-label"
-                            >Search by Zip Code</label>
+                            >Search by US Zip Code</label>
                             <input 
                                 type="text" 
                                 max="5"
+                                placeholder="Example: 11221"
                                 className="search__form-input" 
                                 value = {this.state.zip}
                                 name="zip"
@@ -93,15 +163,32 @@ class Search extends Component{
                     <section className="results">
                         {
                             (isSubmitted) ? (
-                                <CurrentForecast 
-                                    date={today}
-                                /> 
-                                  
+                            <div>
+                                    <h1 className="results__title">{today.name}, {today.sys.country}</h1> 
+                                     <h2 className="results__date">{date}</h2>
+                                     <aside className="results__current">
+                                        <h3 className="results__current-temp">Temp: {fConverter(today.main.temp)} &deg;F</h3>
+                                        <h4 className="results__current-feels">Feels Like: {fConverter(today.main.feels_like)}&deg;F</h4>
+                                            <p className="results__current-weather-info">Current Outlook: {today.weather[0].description}</p>
+                                        <p className="results__current-high">High: {fConverter(today.main.temp_max)}&deg;F</p>
+                                        <p className="results__current-low">Low: {fConverter(today.main.temp_min)}&deg;F</p>
+                                    
+                                     </aside>
+                                     <main className="results__forecast" role="list">
+                                        {
+                                            newForecastWeek.map((d, i) => (
+                                                <ForecastWeek
+                                                    date={d}
+                                                    key={i}
+                                                />
+                                            ))
+                                        }
+                                        
+                                     </main>
+                       </div>
                             ) : null
-                        }
-                       
-                         
-                        <main className="results__forecast"></main>
+        } 
+                        
                     </section>
                 </Fragment>
             )
