@@ -11,7 +11,10 @@ class Search extends Component{
             zip: '',
             today: [],
             forecast: [],
-            submitted: false
+            submitted: false,
+            status: '',
+            isLoading: false,
+            focus: false
         }
     }
         
@@ -21,6 +24,7 @@ class Search extends Component{
                 .then(res => {
                     this.setState({
                         today: res.data,
+                        status: res.status,
                         submitted: true
                     })
                 })
@@ -32,6 +36,7 @@ class Search extends Component{
             .then(res => {
                 this.setState({
                     forecast: res.data.list,
+                    status: res.status,
                     submitted: true
                 })
             }).catch(err => console.log(err))
@@ -67,12 +72,18 @@ class Search extends Component{
 
         render(){
             const isSubmitted = this.state.submitted
+            const cZip = this.state.zip;
+            const status = parseInt(this.state.status);
+            const checkZip = zip => {
+                return /(^\d{5}$)/.test(zip)
+            }
             const fConverter = temp => {
                  temp = (1.8 * (temp - 273)) + 32
                  return temp.toFixed(1)
             }
             //variables for current
             const today = this.state.today;
+            //variables for the dates
             const dateOptions = {
                 weekday: 'short',
                 day: 'numeric',
@@ -141,7 +152,7 @@ class Search extends Component{
                             >Search by US Zip Code</label>
                             <input 
                                 type="text" 
-                                max="5"
+                                maxLength="5"
                                 placeholder="Example: 11221"
                                 className="search__form-input" 
                                 value = {this.state.zip}
@@ -154,11 +165,29 @@ class Search extends Component{
                                 }}
                                 id="searchBar"
                             />
+                            
                             <button 
                                 className="search__form-button"
                                 type="submit"
                             >Show the Weather</button>
+                            {
+                                (!checkZip(cZip)) ? (
+                                    <div className="error" role="alert">
+                                        Please Enter a Valid Zip Code
+                                    </div>
+                                ):null
+                            }
                         </form>
+                    </section>
+                    <section className="status-error">
+                        {
+                            (status === 404) ? (
+                                <h2 className="status-error__message">
+                                    Please Try Again
+                                </h2>
+                            ):null
+                        }
+                        
                     </section>
                     <section className="results">
                         {
@@ -169,7 +198,15 @@ class Search extends Component{
                                      <aside className="results__current">
                                         <h3 className="results__current-temp">Temp: {fConverter(today.main.temp)} &deg;F</h3>
                                         <h4 className="results__current-feels">Feels Like: {fConverter(today.main.feels_like)}&deg;F</h4>
-                                            <p className="results__current-weather-info">Current Outlook: {today.weather[0].description}</p>
+                                        <div className="results__current-weather">
+                                            <img src={`http://openweathermap.org/img/w/${today.weather[0].icon}.png`} alt={today.weather[0].description} className="results__current-weather-icon" 
+                                            style={{
+                                                width: "60px",
+                                                height: "60px"
+                                                }}/>
+                                        <p className="results__current-weather-info">Current Outlook: {today.weather[0].description}</p>
+                                        </div>
+                                            
                                         <p className="results__current-high">High: {fConverter(today.main.temp_max)}&deg;F</p>
                                         <p className="results__current-low">Low: {fConverter(today.main.temp_min)}&deg;F</p>
                                     
