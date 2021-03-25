@@ -14,11 +14,13 @@ body{
     align-items: center;
     flex-wrap: wrap;
     margin: 0;
-    height: 100%;
+    height: 150%;
 }
 
 .app__title{
     text-align: center;
+    animation: fadeInDown;
+    animation-duration: 1.5s;
     padding: 2rem 0;
     font-size: 4rem;
     font-weight: 200;
@@ -35,6 +37,8 @@ body{
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
+        animation: fadeInUp;
+        animation-duration: 1.5s;
         &-label{
             font-size: 1.25rem;
         }
@@ -72,9 +76,13 @@ body{
 
 .results{
     margin-top: 3rem;
+    border-radius: 9px;
+    padding: 1.5rem;
     &__title,
     &__date{
         text-align: center;
+        animation: fadeIn;
+        animation-duration: 1.5s;
     }
 
     &__title{
@@ -99,6 +107,8 @@ body{
         flex: 32%;
         flex-direction: column;
         padding: 1.5rem;
+        animation: fadeInLeft;
+        animation-duration: 2.1s;
         &-temp{
             word-wrap: break-word;
             font-size: 3.75rem;
@@ -115,7 +125,7 @@ body{
         &-weather{
             &-icon{
                 font-size: 5rem;
-                color: #180505;
+                color: #140808;
                 padding-bottom: 1rem;
             }
             &-info{
@@ -135,16 +145,21 @@ body{
 
     &__forecast{
         flex: 68%;
+        animation: fadeInRight;
+        animation-duration: 2.5s;
         &-article{
             display: flex;
-            border: 1px solid black;
+            animation: fadeInRight;
+            animation-delay: .45s;
+            flex-wrap: wrap;
+            border: 1.5px solid rgb(119, 115, 115);
             border-radius: 8px;
             margin-bottom: 1.25rem;
             &-date{
-                font-size: 2rem;
-                padding: 1.25rem;
+                font-size: 2.25rem;
+                padding: 1.23rem 1.25rem 1.25rem .75rem;
                 &-title{
-                    font-weight: 200;
+                    font-weight: 400;
                 }
             }
             &-weather,
@@ -155,7 +170,7 @@ body{
 
             &-date{
                 width: 180px;
-                border-right: 1px solid black;
+                border-radius: 9px  0 0 9px;
             }
 
             &-weather,

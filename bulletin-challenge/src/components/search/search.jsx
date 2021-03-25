@@ -151,6 +151,7 @@ class Search extends Component{
             return(
                 <Fragment>
                     <section className="search">
+                        <h1 className="app__title">Weather App</h1>
                         <form onSubmit = {this.handleSubmit} className="search__form">
                             <label 
                                 htmlFor="searchBar" 
@@ -186,16 +187,6 @@ class Search extends Component{
                             >Show Me the Weather</button>
                         </form>
                     </section>
-                    <section className="status-error">
-                        {
-                            (status === 404) ? (
-                                <h2 className="status-error__message">
-                                    Please Try Again
-                                </h2>
-                            ):null
-                        }
-                        
-                    </section>
                     
                         {
                             (isSubmitted) ? (
@@ -210,7 +201,6 @@ class Search extends Component{
                                             <WeatherIcon 
                                             iconId={today.weather[0].id} name="owm" className="results__current-weather-icon" 
                                             alt={today.weather[0].description} 
-                                            night
                                             />
                                         <p className="results__current-weather-info">Current Outlook: {today.weather[0].description}</p>
                                         </div>
