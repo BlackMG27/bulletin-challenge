@@ -3,7 +3,7 @@ This is the weather app for the bulletin front end developer challenge
 
 ### Live Link
 
-[React Weather App](https://blackmg27.io/bulletin-challenge)
+[React Weather App](https://blackmg27.github..io/bulletin-challenge)
 
 ## My Process 
 
