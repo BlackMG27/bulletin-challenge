@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/bulletin-react-weather/static/css/main.0fff4a49.chunk.css",
+    "main.js": "/bulletin-react-weather/static/js/main.d4bb9690.chunk.js",
+    "main.js.map": "/bulletin-react-weather/static/js/main.d4bb9690.chunk.js.map",
+    "runtime-main.js": "/bulletin-react-weather/static/js/runtime-main.1c624213.js",
+    "runtime-main.js.map": "/bulletin-react-weather/static/js/runtime-main.1c624213.js.map",
+    "static/css/2.efae83f3.chunk.css": "/bulletin-react-weather/static/css/2.efae83f3.chunk.css",
+    "static/js/2.b747ef3a.chunk.js": "/bulletin-react-weather/static/js/2.b747ef3a.chunk.js",
+    "static/js/2.b747ef3a.chunk.js.map": "/bulletin-react-weather/static/js/2.b747ef3a.chunk.js.map",
+    "static/js/3.c7161556.chunk.js": "/bulletin-react-weather/static/js/3.c7161556.chunk.js",
+    "static/js/3.c7161556.chunk.js.map": "/bulletin-react-weather/static/js/3.c7161556.chunk.js.map",
+    "index.html": "/bulletin-react-weather/index.html",
+    "static/css/2.efae83f3.chunk.css.map": "/bulletin-react-weather/static/css/2.efae83f3.chunk.css.map",
+    "static/css/main.0fff4a49.chunk.css.map": "/bulletin-react-weather/static/css/main.0fff4a49.chunk.css.map",
+    "static/js/2.b747ef3a.chunk.js.LICENSE.txt": "/bulletin-react-weather/static/js/2.b747ef3a.chunk.js.LICENSE.txt",
+    "static/media/weather-icons-wind.css": "/bulletin-react-weather/static/media/weathericons-regular-webfont.e218aee6.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1c624213.js",
+    "static/css/2.efae83f3.chunk.css",
+    "static/js/2.b747ef3a.chunk.js",
+    "static/css/main.0fff4a49.chunk.css",
+    "static/js/main.d4bb9690.chunk.js"
+  ]
+}
