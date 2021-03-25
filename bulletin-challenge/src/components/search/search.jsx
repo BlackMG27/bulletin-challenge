@@ -1,4 +1,6 @@
 import React, {Fragment, Component} from 'react';
+import {WeatherIcon} from 'weather-react-icons';
+import 'weather-react-icons/lib/css/weather-icons.css';
 //import PropTypes from 'prop-types'
 import CurrentGrab from '../../utils/CurrentGrab';
 import ForecastGrab from '../../utils/ForecastGrab';
@@ -47,6 +49,10 @@ class Search extends Component{
             this.fetchForecast();
         }
 
+        makeRequest = () => {
+
+        }
+
     
     handleChange = e => {
         const {value, name} = e.target;
@@ -92,6 +98,8 @@ class Search extends Component{
                 timezone: 'UTC'
             }
             const date = new Intl.DateTimeFormat('en-US', dateOptions).format(new Date())
+
+            const hours = new Date().getHours();
 
             //variables for forecast 
             const forecast = this.state.forecast;
@@ -163,20 +171,21 @@ class Search extends Component{
                                         this.handleSubmit(e);
                                     }
                                 }}
+                                onFocus = { (e) => {
+                                        if(!checkZip(e)) {
+                                            <p className="error" role="alert">
+                                                Please Enter a Valid Zip Code
+                                            </p>
+                                        }
+                                    }
+                                }
                                 id="searchBar"
                             />
                             
                             <button 
                                 className="search__form-button"
                                 type="submit"
-                            >Show the Weather</button>
-                            {
-                                (!checkZip(cZip)) ? (
-                                    <div className="error" role="alert">
-                                        Please Enter a Valid Zip Code
-                                    </div>
-                                ):null
-                            }
+                            >Show Me the Weather</button>
                         </form>
                     </section>
                     <section className="status-error">
@@ -189,21 +198,23 @@ class Search extends Component{
                         }
                         
                     </section>
-                    <section className="results">
+                    
                         {
                             (isSubmitted) ? (
-                            <div>
+                                <section className="results">
                                     <h1 className="results__title">{today.name}, {today.sys.country}</h1> 
                                      <h2 className="results__date">{date}</h2>
+                                     <div className="results__info" role="group">
                                      <aside className="results__current">
                                         <h3 className="results__current-temp">Temp: {fConverter(today.main.temp)} &deg;F</h3>
                                         <h4 className="results__current-feels">Feels Like: {fConverter(today.main.feels_like)}&deg;F</h4>
                                         <div className="results__current-weather">
-                                            <img src={`http://openweathermap.org/img/w/${today.weather[0].icon}.png`} alt={today.weather[0].description} className="results__current-weather-icon" 
-                                            style={{
-                                                width: "60px",
-                                                height: "60px"
-                                                }}/>
+                                            <WeatherIcon 
+                                            iconId={today.weather[0].id} name="owm" className="results__current-weather-icon" 
+                                            alt={today.weather[0].description} 
+                                            night
+                                            
+                                            />
                                         <p className="results__current-weather-info">Current Outlook: {today.weather[0].description}</p>
                                         </div>
                                             
@@ -222,11 +233,12 @@ class Search extends Component{
                                         }
                                         
                                      </main>
-                       </div>
+                                     </div>
+                                     </section>
                             ) : null
         } 
                         
-                    </section>
+                    
                 </Fragment>
             )
     }
