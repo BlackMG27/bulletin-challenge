@@ -1,7 +1,13 @@
 # bulletin-challenge
 This is the weather app for the bulletin front end developer challenge
 
+### Live Link
+
+[React Weather App](https://blackmg27.io/bulletin-challenge)
+
 ## My Process 
+
+***
 
 1. I experimented with the both APIs to see what I was dealing with. 
 2. I set up my React file structure to my liking 
@@ -14,7 +20,7 @@ This is the weather app for the bulletin front end developer challenge
       - high and low temps
       - weather description and weather icon via react-weather-icons
     2. Forecast
-        - the date by grouping the list array by dt_txt.substring(0,10) 
+        - the date by grouping the list array by `dt_txt.substring(0,10)` 
         - the highs and lows 
         - whether or not it would rain that day
 4. Built out the search bar 
