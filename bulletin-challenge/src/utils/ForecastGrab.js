@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-const newForecastWeek = [];
-let forecast;
-
 
    export default {
      getForecast: zipCode => {

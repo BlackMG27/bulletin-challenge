@@ -1,6 +1,7 @@
 import React, {Fragment, Component} from 'react';
 import {WeatherIcon} from 'weather-react-icons';
 import 'weather-react-icons/lib/css/weather-icons.css';
+import 'weather-react-icons/lib/css/weather-icons-wind.css';
 //import PropTypes from 'prop-types'
 import CurrentGrab from '../../utils/CurrentGrab';
 import ForecastGrab from '../../utils/ForecastGrab';
@@ -16,7 +17,7 @@ class Search extends Component{
             submitted: false,
             status: '',
             isLoading: false,
-            focus: false
+            night: false
         }
     }
         
@@ -78,7 +79,6 @@ class Search extends Component{
 
         render(){
             const isSubmitted = this.state.submitted
-            const cZip = this.state.zip;
             const status = parseInt(this.state.status);
             const checkZip = zip => {
                 return /(^\d{5}$)/.test(zip)
@@ -98,8 +98,6 @@ class Search extends Component{
                 timezone: 'UTC'
             }
             const date = new Intl.DateTimeFormat('en-US', dateOptions).format(new Date())
-
-            const hours = new Date().getHours();
 
             //variables for forecast 
             const forecast = this.state.forecast;
@@ -213,7 +211,6 @@ class Search extends Component{
                                             iconId={today.weather[0].id} name="owm" className="results__current-weather-icon" 
                                             alt={today.weather[0].description} 
                                             night
-                                            
                                             />
                                         <p className="results__current-weather-info">Current Outlook: {today.weather[0].description}</p>
                                         </div>
