@@ -7,8 +7,6 @@ This is the weather app for the bulletin front end developer challenge
 
 ## My Process 
 
-***
-
 1. I experimented with the both APIs to see what I was dealing with. 
 2. I set up my React file structure to my liking 
 3. Played with various functions that would allow me to get:
